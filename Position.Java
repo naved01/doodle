@@ -13,9 +13,9 @@ public class Position {
       
       //methods
       public boolean equals(Object position) {
-          if !(position instanceof Position) return False;
+          if (!(position instanceof Position)) return false;
           Position newPosition = (Position) position;
-          return (newPosition.x == this.x && newPosition.y == this.y)
+          return (newPosition.x == this.x && newPosition.y == this.y);
       }
       
       public int getX() {
@@ -26,11 +26,11 @@ public class Position {
           return y;
       }
       
-      public void setX(int X) {
-          this.X = X;
+      public void setX(int x) {
+          this.x = y;
       }
       
-      public void setY(int Y) {
-          this.Y = Y;
+      public void setY(int y) {
+          this.y = y;
       }
 }
