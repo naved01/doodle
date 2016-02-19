@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.GridLayout;
 
 public class Doodle extends JFrame {
     
@@ -9,6 +10,27 @@ public class Doodle extends JFrame {
     
     public Doodle() {
         
+        Model model = new Model();
+        
+        Canvas canvas = new Canvas(model);
+        model.addObserver(canvas);
+        
+        //model.notifyObservers();
+        
+        JPanel p = new JPanel(new GridLayout(1,1));
+        getContentPane().add(p);
+        p.add(canvas);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setSize(400, 400);
+        setJMenuBar(getMenu());
+        setTitle("doodly doodle");
+        setVisible(true);
+        
+    }
+    
+   public JMenuBar getMenu() {
+       
         menuBar = new JMenuBar();
         
         file = new JMenu("File");
@@ -44,15 +66,11 @@ public class Doodle extends JFrame {
         menuItem = new JMenuItem("Fit for window");
         submenu.add(menuItem);
         
-        view.add(submenu);
+        view.add(submenu);  
         
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-        setSize(400, 400);
-        setJMenuBar(menuBar);
-        setTitle("doodly doodle");
-        setVisible(true);
-    }
+        return menuBar;     
+   }
+    
     
    public static void main(String[] args) {
        EventQueue.invokeLater(new Runnable() {

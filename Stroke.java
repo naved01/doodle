@@ -4,7 +4,7 @@ public class Stroke {
     
     //variables
     private String color;
-    private ArrayList<Position> line;
+    ArrayList<Position> line;
     
     //constructors
     public Stroke(String color) {
