@@ -47,6 +47,7 @@ public class Canvas extends JPanel implements Observer {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         for (int i = 0; i < model.strokes.size(); i++) {
+            g.setColor(model.strokes.get(i).getColor());
             for (int j = 1; j < model.strokes.get(i).line.size(); j++) {
                 g.drawLine(model.strokes.get(i).line.get(j-1).getX(), model.strokes.get(i).line.get(j-1).getY(), model.strokes.get(i).line.get(j).getX(), model.strokes.get(i).line.get(j).getY() );
             }

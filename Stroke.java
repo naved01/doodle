@@ -1,13 +1,14 @@
 import java.util.ArrayList;
+import java.awt.Color;
 
 public class Stroke {
     
     //variables
-    private String color;
+    Color color;
     ArrayList<Position> line;
     
     //constructors
-    public Stroke(String color) {
+    public Stroke(Color color) {
         this.color = color;
         line = new ArrayList<Position>();
     }
@@ -21,11 +22,11 @@ public class Stroke {
         return line;
     }
     
-    public String getColor() {
+    public Color getColor() {
         return color;
     }
     
-    public void setColor(String color) {
+    public void setColor(Color color) {
         this.color = color;
     }
 }

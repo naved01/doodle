@@ -14,11 +14,14 @@ public class Doodle extends JFrame {
         
         Canvas canvas = new Canvas(model);
         model.addObserver(canvas);
+        ColorPalette colorPalette = new ColorPalette(model);
+        model.addObserver(colorPalette);
         
         //model.notifyObservers();
         
-        JPanel p = new JPanel(new GridLayout(1,1));
+        JPanel p = new JPanel(new GridLayout(1,2));
         getContentPane().add(p);
+        p.add(colorPalette);
         p.add(canvas);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);

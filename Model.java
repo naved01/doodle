@@ -1,15 +1,16 @@
 import java.util.Observable;
 import java.util.ArrayList;
+import java.awt.Color;
 
 public class Model extends Observable {
     
     //variables
-    String currentColor;
+    Color currentColor;
     ArrayList<Stroke> strokes;
     
     //constructors 
     public Model() {
-        currentColor = "black";
+        currentColor = Color.BLACK;
         strokes = new ArrayList<Stroke>();
         //setChanged();
     }
@@ -39,14 +40,13 @@ public class Model extends Observable {
         return strokes.size();
     }
     
-    public void setCurrentColor(String currentColor) {
-        System.out.println("Model: set color to " + currentColor);
+    public void setCurrentColor(Color currentColor) {
         this.currentColor = currentColor;
         setChanged();
         notifyObservers();
     }
     
-    public String getCurrentColor() {
+    public Color getCurrentColor() {
         return currentColor;
     }
 }
