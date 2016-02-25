@@ -5,11 +5,13 @@ public class Stroke {
     
     //variables
     Color color;
+    int thickness;
     ArrayList<Position> line;
     
     //constructors
-    public Stroke(Color color) {
+    public Stroke(Color color, int thickness) {
         this.color = color;
+        this.thickness = thickness;
         line = new ArrayList<Position>();
     }
     
@@ -26,7 +28,15 @@ public class Stroke {
         return color;
     }
     
+    public int getThickness() {
+        return thickness;
+    }
+    
     public void setColor(Color color) {
         this.color = color;
     }
+    
+    public void setThickness(int thickness) {
+        this.thickness = thickness;
+    } 
 }

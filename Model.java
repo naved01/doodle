@@ -6,11 +6,13 @@ public class Model extends Observable {
     
     //variables
     Color currentColor;
+    int currentThickness;
     ArrayList<Stroke> strokes;
     
     //constructors 
     public Model() {
         currentColor = Color.BLACK;
+        currentThickness = 1;
         strokes = new ArrayList<Stroke>();
         //setChanged();
     }
@@ -36,12 +38,14 @@ public class Model extends Observable {
         return strokes;
     }
     
-    public int getStrokesSize() {
-        return strokes.size();
-    }
-    
     public void setCurrentColor(Color currentColor) {
         this.currentColor = currentColor;
+        setChanged();
+        notifyObservers();
+    }
+    
+    public void setCurrentThickness(int thickness) {
+        this.currentThickness = thickness;
         setChanged();
         notifyObservers();
     }
@@ -49,4 +53,9 @@ public class Model extends Observable {
     public Color getCurrentColor() {
         return currentColor;
     }
+    
+    public int getCurrentThickness() {
+        return currentThickness;
+    }
+    
 }

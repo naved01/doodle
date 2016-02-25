@@ -5,10 +5,12 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.*;	
 import java.awt.Color;
+import java.awt.*;
 import java.util.Observable;
 import java.util.Observer;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 public class Canvas extends JPanel implements Observer {
     
@@ -27,7 +29,7 @@ public class Canvas extends JPanel implements Observer {
         
         addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
-                Stroke s = new Stroke(model.getCurrentColor());
+                Stroke s = new Stroke(model.getCurrentColor(), model.getCurrentThickness() );
                 Position p = new Position(e.getX(), e.getY());
                 s.addStrokeLinePosition(p);
                 model.addStroke(s);
@@ -44,9 +46,11 @@ public class Canvas extends JPanel implements Observer {
     }
     
     @Override 
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
+    public void paintComponent(Graphics gr) {
+        super.paintComponent(gr);
+        Graphics2D g = (Graphics2D) gr;
         for (int i = 0; i < model.strokes.size(); i++) {
+            g.setStroke(new BasicStroke(model.strokes.get(i).getThickness()));
             g.setColor(model.strokes.get(i).getColor());
             for (int j = 1; j < model.strokes.get(i).line.size(); j++) {
                 g.drawLine(model.strokes.get(i).line.get(j-1).getX(), model.strokes.get(i).line.get(j-1).getY(), model.strokes.get(i).line.get(j).getX(), model.strokes.get(i).line.get(j).getY() );

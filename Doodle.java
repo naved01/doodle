@@ -16,12 +16,15 @@ public class Doodle extends JFrame {
         model.addObserver(canvas);
         ColorPalette colorPalette = new ColorPalette(model);
         model.addObserver(colorPalette);
+        ThicknessPicker thicknessPicker = new ThicknessPicker(model);
+        model.addObserver(thicknessPicker);
         
         //model.notifyObservers();
         
-        JPanel p = new JPanel(new GridLayout(1,2));
+        JPanel p = new JPanel(new GridLayout(1,3));
         getContentPane().add(p);
         p.add(colorPalette);
+        p.add(thicknessPicker);
         p.add(canvas);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
