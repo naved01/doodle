@@ -18,17 +18,27 @@ public class Doodle extends JFrame {
         model.addObserver(colorPalette);
         ThicknessPicker thicknessPicker = new ThicknessPicker(model);
         model.addObserver(thicknessPicker);
+        PlayBack playBack = new PlayBack(model);
+        model.addObserver(playBack);
         
         //model.notifyObservers();
+        JPanel customizer = new JPanel(new BorderLayout());
+        customizer.add(colorPalette, BorderLayout.PAGE_START);
+        customizer.add(thicknessPicker);
+        customizer.setPreferredSize(new Dimension(70, 300));
         
-        JPanel p = new JPanel(new GridLayout(1,3));
+        JPanel drawingPanel = new JPanel(new BorderLayout());
+        drawingPanel.add(customizer, BorderLayout.LINE_START);
+        drawingPanel.add(canvas);
+        
+        JPanel p = new JPanel(new BorderLayout());
         getContentPane().add(p);
-        p.add(colorPalette);
-        p.add(thicknessPicker);
-        p.add(canvas);
+
+        p.add(drawingPanel, BorderLayout.PAGE_START);
+        p.add(playBack);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        setSize(400, 400);
+        setSize(500, 400);
         setJMenuBar(getMenu());
         setTitle("doodly doodle");
         setVisible(true);
@@ -76,7 +86,6 @@ public class Doodle extends JFrame {
         
         return menuBar;     
    }
-    
     
    public static void main(String[] args) {
        EventQueue.invokeLater(new Runnable() {

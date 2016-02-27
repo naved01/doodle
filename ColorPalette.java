@@ -4,7 +4,7 @@ import javax.swing.*;
 
 import java.awt.GridLayout;
 import java.awt.event.*;
-import java.awt.Color;
+import java.awt.*;
 
 
 public class ColorPalette extends JPanel implements Observer {
@@ -18,7 +18,8 @@ public class ColorPalette extends JPanel implements Observer {
     public ColorPalette(Model model_) {
         
         this.setLayout(new GridLayout(0,2));
-        
+        this.setBorder(BorderFactory.createLineBorder(Color.black));
+        //this.setMaximumSize(new Dimension(100,500));
         model = model_;  
         
         buttons = new JButton[NUM_OF_BUTTONS];
@@ -36,7 +37,7 @@ public class ColorPalette extends JPanel implements Observer {
         
             colorPicker.addMouseListener(new MouseAdapter() {
                 public void mouseReleased(MouseEvent e) {
-                    model.setCurrentColor(JColorChooser.showDialog(ColorPalette.this, "pick custom color", model.getCurrentColor()));
+                    model.setCurrentColor(JColorChooser.showDialog(ColorPalette.this, "custom color", model.getCurrentColor()));
                 }
             });
         

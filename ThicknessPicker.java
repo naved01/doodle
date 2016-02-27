@@ -14,7 +14,7 @@ public class ThicknessPicker extends JPanel implements Observer {
     public ThicknessPicker(Model model_) {
         
         this.setLayout(new GridLayout(0,2));
-        
+        //this.setPreferredSize(new Dimension(50));
         model = model_;
         
         thicknessButtons = new JButton[NUM_OF_THICKNESS];
@@ -26,7 +26,7 @@ public class ThicknessPicker extends JPanel implements Observer {
         thicknessButtons[0].addMouseListener(new MouseAdapter() {
             public void mouseReleased(MouseEvent e) {                 
                 model.setCurrentThickness(1);            
-            } 
+            }
         }); 
 
         thicknessButtons[1].addMouseListener(new MouseAdapter() {
