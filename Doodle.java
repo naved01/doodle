@@ -54,8 +54,32 @@ public class Doodle extends JFrame {
         setVisible(true);
         
     }
+   
+    public void loadFile() {
+        int returnVal = loadFileChooser.showOpenDialog(Doodle.this);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            try {
+                File ourfile = loadFileChooser.getSelectedFile();
+                if (!Utils.getExtension(ourfile).equalsIgnoreCase(Utils.txt) && !Utils.getExtension(ourfile).equalsIgnoreCase(Utils.bin) ) {
+                    JOptionPane.showMessageDialog(null, "Incompatible file","Error",JOptionPane.ERROR_MESSAGE); 
+                    return;
+                }
+                ObjectInputStream obj_in = new ObjectInputStream ( new FileInputStream(loadFileChooser.getSelectedFile()));
+                Object obj = obj_in.readObject();
+                if (obj instanceof Model) {
+                    Model loadedModel = (Model) obj;
+                    model.loadModel(loadedModel);                                                    
+                }
+                obj_in.close();  
+            } catch (IOException error) {
+                error.printStackTrace();
+            } catch (ClassNotFoundException error) {
+                error.printStackTrace();
+            }                                 
+        }
+    }
     
-   public void saveFile()  {
+    public void saveFile()  {
         int returnVal = saveFileChooser.showSaveDialog(saveFileChooser);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             try {
@@ -71,9 +95,9 @@ public class Doodle extends JFrame {
                 error.printStackTrace();
             }                  
         } 
-   }
+    }
     
-   public JMenuBar getMenu() {
+    public JMenuBar getMenu() {
        
         menuBar = new JMenuBar();
         
@@ -109,27 +133,7 @@ public class Doodle extends JFrame {
         menuItem = new JMenuItem("Load");
         menuItem.addMouseListener(new MouseAdapter() {
             public void mouseReleased(MouseEvent e) {
-                int returnVal = loadFileChooser.showOpenDialog(Doodle.this);
-                if (returnVal == JFileChooser.APPROVE_OPTION) {
-                    try {
-                        File ourfile = loadFileChooser.getSelectedFile();
-                        if (!Utils.getExtension(ourfile).equalsIgnoreCase(Utils.txt) && !Utils.getExtension(ourfile).equalsIgnoreCase(Utils.bin) ) {
-                            JOptionPane.showMessageDialog(null, "Incompatible file","Error",JOptionPane.ERROR_MESSAGE); 
-                            return;
-                        }
-                        ObjectInputStream obj_in = new ObjectInputStream ( new FileInputStream(loadFileChooser.getSelectedFile()));
-                        Object obj = obj_in.readObject();
-                        if (obj instanceof Model) {
-                            Model loadedModel = (Model) obj;
-                            model.loadModel(loadedModel);                                                    
-                        }
-                        obj_in.close();  
-                    } catch (IOException error) {
-                        error.printStackTrace();
-                    } catch (ClassNotFoundException error) {
-                        error.printStackTrace();
-                    }                                 
-                }
+                loadFile();
             }
         });
         file.add(menuItem);
@@ -159,14 +163,13 @@ public class Doodle extends JFrame {
         view.add(submenu);  
         
         return menuBar;     
-   }
+    }
     
-   public static void main(String[] args) {
-       EventQueue.invokeLater(new Runnable() {
-          public void run() {
-              Doodle doodle = new Doodle();
-          } 
-       });
-   }
-    
+    public static void main(String[] args) {
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                Doodle doodle = new Doodle();
+            } 
+        });
+    }    
 }

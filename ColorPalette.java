@@ -101,6 +101,6 @@ public class ColorPalette extends JPanel implements Observer {
 	@Override
 	public void update(Observable arg0, Object arg1) {
         //override code	
-        
+       
 	}
 }
