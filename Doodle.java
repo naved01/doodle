@@ -112,6 +112,11 @@ public class Doodle extends JFrame {
                 int returnVal = loadFileChooser.showOpenDialog(Doodle.this);
                 if (returnVal == JFileChooser.APPROVE_OPTION) {
                     try {
+                        File ourfile = loadFileChooser.getSelectedFile();
+                        if (!Utils.getExtension(ourfile).equalsIgnoreCase(Utils.txt) && !Utils.getExtension(ourfile).equalsIgnoreCase(Utils.bin) ) {
+                            JOptionPane.showMessageDialog(null, "Incompatible file","Error",JOptionPane.ERROR_MESSAGE); 
+                            return;
+                        }
                         ObjectInputStream obj_in = new ObjectInputStream ( new FileInputStream(loadFileChooser.getSelectedFile()));
                         Object obj = obj_in.readObject();
                         if (obj instanceof Model) {
