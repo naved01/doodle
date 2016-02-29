@@ -1,10 +1,13 @@
 import java.util.Observable;
 import java.util.ArrayList;
 import java.awt.Color;
+import java.io.Serializable;
 
-public class Model extends Observable {
+public class Model extends Observable implements Serializable {
     
     //variables
+    private static final long serialVersionUID = 1L;
+    
     Color currentColor;
     int currentThickness;
     int playbackTicks;
@@ -14,13 +17,29 @@ public class Model extends Observable {
     
     //constructors 
     public Model() {
+        setInitialValues();
+    }
+    
+    public void loadModel(Model loadedModel) {
+        playbackTicks = loadedModel.playbackTicks;
+        currentColor = loadedModel.currentColor;
+        strokes = loadedModel.strokes;
+        currentTick = loadedModel.currentTick;
+        currentThickness = loadedModel.currentThickness;  
+        isPlaying = false;
+        setChanged();
+        notifyObservers();             
+    }
+    
+    public void setInitialValues() {
         playbackTicks = 0;
         currentColor = Color.BLACK;
         currentThickness = 1;
         currentTick = 0;
         isPlaying = false;
         strokes = new ArrayList<Stroke>();
-        //setChanged();
+        setChanged();
+        notifyObservers();
     }
     
     //methods
@@ -28,6 +47,10 @@ public class Model extends Observable {
         strokes.add(s);
         setChanged();
         notifyObservers();
+    }
+    
+    public boolean isNew() {
+        return (strokes.size() == 0);
     }
     
     public void play() {
@@ -89,7 +112,6 @@ public class Model extends Observable {
         this.currentTick = currentTick;
         setChanged();
         notifyObservers();
-        System.out.println("current tick: " + currentTick);
     }
     
     public int getCurrentTick() {

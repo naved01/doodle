@@ -1,7 +1,10 @@
+import java.io.Serializable;
 
-public class Position {
+public class Position implements Serializable {
       
       //variables
+      private static final long serialVersionUID = 2L;
+      
       private int x;
       private int y;
       

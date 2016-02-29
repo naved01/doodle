@@ -14,14 +14,14 @@ public class PlayBack extends JPanel implements Observer {
     int MAX_N_OF_TICKS = 10000;
     
     class SliderListener implements ChangeListener {
-            public void stateChanged(ChangeEvent e) {
-                JSlider source = (JSlider)e.getSource();
-                if (!source.getValueIsAdjusting()) {
-                     int currentTick = (int)source.getValue(); 
-                     currentTick = currentTick/(MAX_N_OF_TICKS/model.getPlayBackTicks());
-                     model.setCurrentTick(currentTick); 
-                }
+        public void stateChanged(ChangeEvent e) {
+            JSlider source = (JSlider)e.getSource();
+            if (!source.getValueIsAdjusting()) {
+                    int currentTick = (int)source.getValue(); 
+                    currentTick = currentTick/(MAX_N_OF_TICKS/model.getPlayBackTicks());
+                    model.setCurrentTick(currentTick); 
             }
+        }
     }
     
     public PlayBack(Model model_) {
@@ -77,7 +77,11 @@ public class PlayBack extends JPanel implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-        
+
+       if (model.getPlayBackTicks() == 0) {
+           timeline.setMajorTickSpacing(0);
+       }
+
        if (model.getPlayBackTicks() > 0) {
            timeline.setMajorTickSpacing(MAX_N_OF_TICKS/model.getPlayBackTicks()); 
        }
@@ -85,6 +89,7 @@ public class PlayBack extends JPanel implements Observer {
        if (model.getCurrentTick() != 0) {
            timeline.setValue(model.getCurrentTick()*(MAX_N_OF_TICKS/model.getPlayBackTicks()));
        }
+       
        
 	}
     

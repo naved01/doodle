@@ -1,11 +1,13 @@
 import java.util.ArrayList;
 import java.awt.Color;
+import java.io.Serializable;
 
-public class Stroke {
+public class Stroke implements Serializable {
     
     //variables
     Color color;
     int thickness;
+    private static final long serialVersionUID = 3L;
     ArrayList<Position> line;
     
     //constructors

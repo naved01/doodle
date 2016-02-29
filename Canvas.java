@@ -56,7 +56,7 @@ public class Canvas extends JPanel implements Observer {
     @Override 
     public void paintComponent(Graphics gr) {
         super.paintComponent(gr);
-        System.out.println("drawing up to " + model.getCurrentTick());
+        //System.out.println("drawing up to " + model.getCurrentTick());
         Graphics2D g = (Graphics2D) gr;
         for (int i = 0; i < model.getCurrentTick(); i++) {
             g.setStroke(new BasicStroke(model.strokes.get(i).getThickness()));

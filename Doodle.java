@@ -1,16 +1,25 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
+import java.util.*;
+import java.io.*;
 import java.awt.GridLayout;
 
 public class Doodle extends JFrame {
     
     JMenuBar menuBar;
     JMenu file, view, submenu;
-    JMenuItem menuItem;   
+    JMenuItem menuItem;
+    JFileChooser loadFileChooser, saveFileChooser;
+    Model model;
     
     public Doodle() {
         
-        Model model = new Model();
+        saveFileChooser = new JFileChooser();
+        loadFileChooser = new JFileChooser();
+        loadFileChooser.addChoosableFileFilter(new BinaryFilter());
+        loadFileChooser.addChoosableFileFilter(new TextFilter());
+        model = new Model();
         
         Canvas canvas = new Canvas(model);
         model.addObserver(canvas);
@@ -45,6 +54,24 @@ public class Doodle extends JFrame {
         
     }
     
+   public void saveFile()  {
+        int returnVal = saveFileChooser.showSaveDialog(saveFileChooser);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            try {
+                File ourfile = saveFileChooser.getSelectedFile();
+                if (!Utils.getExtension(ourfile).equalsIgnoreCase(Utils.txt) && !Utils.getExtension(ourfile).equalsIgnoreCase(Utils.bin) ) {                           
+                    ourfile = new File(ourfile.toString() + ".ddbin");
+                } 
+                ObjectOutputStream obj_out = new ObjectOutputStream (new FileOutputStream(ourfile));
+                obj_out.writeObject(model);
+                obj_out.close();
+                JOptionPane.showMessageDialog(null, "File has been saved","File Saved",JOptionPane.INFORMATION_MESSAGE);                                                
+            } catch (IOException error) {
+                error.printStackTrace();
+            }                  
+        } 
+   }
+    
    public JMenuBar getMenu() {
        
         menuBar = new JMenuBar();
@@ -56,30 +83,71 @@ public class Doodle extends JFrame {
         menuBar.add(view);
         
         menuItem = new JMenuItem("New");
-        menuItem.getAccessibleContext().setAccessibleDescription("doesnt do much");
+        menuItem.addMouseListener(new MouseAdapter() {
+            
+            public void mouseReleased(MouseEvent e) {
+                if (!model.isNew()) {
+                    int save = JOptionPane.showConfirmDialog(Doodle.this, "Would you like to save?", "Save", JOptionPane.YES_NO_OPTION);
+                    if (save == 0) {
+                        saveFile();
+                    }
+                }
+                model.setInitialValues();
+            }
+        });
         file.add(menuItem);
 
         menuItem = new JMenuItem("Save");
-        menuItem.getAccessibleContext().setAccessibleDescription("doesnt do much");
+        menuItem.addMouseListener(new MouseAdapter() {           
+            public void mouseReleased(MouseEvent e) {
+                saveFile();
+            }
+        });
         file.add(menuItem);
 
         menuItem = new JMenuItem("Load");
-        menuItem.getAccessibleContext().setAccessibleDescription("doesnt do much");
+        menuItem.addMouseListener(new MouseAdapter() {
+            public void mouseReleased(MouseEvent e) {
+                int returnVal = loadFileChooser.showOpenDialog(Doodle.this);
+                if (returnVal == JFileChooser.APPROVE_OPTION) {
+                    try {
+                        ObjectInputStream obj_in = new ObjectInputStream ( new FileInputStream(loadFileChooser.getSelectedFile()));
+                        Object obj = obj_in.readObject();
+                        if (obj instanceof Model) {
+                            Model loadedModel = (Model) obj;
+                            model.loadModel(loadedModel);                                                    
+                        }
+                        obj_in.close();  
+                    } catch (IOException error) {
+                        error.printStackTrace();
+                    } catch (ClassNotFoundException error) {
+                        error.printStackTrace();
+                    }                                 
+                }
+            }
+        });
         file.add(menuItem);
         
         file.addSeparator();
         menuItem = new JMenuItem("Exit");
-        menuItem.getAccessibleContext().setAccessibleDescription("doesnt do much");
+        menuItem.addMouseListener(new MouseAdapter() {
+            public void mouseReleased(MouseEvent e) {
+                System.exit(0);
+            }
+        });      
         file.add(menuItem);
         
         menuItem = new JMenuItem("Full");
-        menuItem.getAccessibleContext().setAccessibleDescription("doesnt do much");
         view.add(menuItem);        
         
+        ButtonGroup group = new ButtonGroup(); //not sure if i need it
         submenu = new JMenu("Fit");
-        menuItem = new JMenuItem("Original Size");
+        menuItem = new JRadioButtonMenuItem("Original Size");
+        menuItem.setSelected(true);
+        group.add(menuItem);
         submenu.add(menuItem);
-        menuItem = new JMenuItem("Fit for window");
+        menuItem = new JRadioButtonMenuItem("Fit for window");
+        group.add(menuItem);
         submenu.add(menuItem);
         
         view.add(submenu);  
