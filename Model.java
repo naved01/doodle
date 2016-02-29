@@ -60,6 +60,11 @@ public class Model extends Observable implements Serializable {
         isPlaying = false;
     }
     
+    public void cutTheTail() {
+        strokes = new ArrayList<Stroke>(strokes.subList(0, currentTick));
+        playbackTicks = currentTick;
+    }
+    
     public void addStrokeLinePosition(Position p) {
         if (strokes.size() == 0) {
             System.out.println("trying to modify empty set of strokes");

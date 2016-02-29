@@ -12,6 +12,8 @@ public class PlayBack extends JPanel implements Observer {
     JButton play, start, end;
     JSlider timeline;
     int MAX_N_OF_TICKS = 10000;
+    java.util.Timer timer;
+    int i = 0;
     
     class SliderListener implements ChangeListener {
         public void stateChanged(ChangeEvent e) {
@@ -25,7 +27,7 @@ public class PlayBack extends JPanel implements Observer {
     }
     
     public PlayBack(Model model_) {
-         
+        
         setLayout(new BorderLayout());
         model = model_;
         
@@ -89,13 +91,36 @@ public class PlayBack extends JPanel implements Observer {
        if (model.getCurrentTick() != 0) {
            timeline.setValue(model.getCurrentTick()*(MAX_N_OF_TICKS/model.getPlayBackTicks()));
        }
-       
-       
+              
 	}
     
+    public void incrementSlider() {
+        int value = timeline.getValue()/(MAX_N_OF_TICKS/model.getPlayBackTicks());
+        int newValue = (value + 1)*(MAX_N_OF_TICKS/model.getPlayBackTicks());
+        timeline.setValue(newValue);
+    }
+    
     public void playVideo() throws InterruptedException {
+        if (model.getPlayBackTicks() == 0) {
+            return;
+        }
+        timer = new java.util.Timer(); 
         model.play();
-        System.out.println("they pressed me 0_0. dont press me!");
-        model.stopPlay();
+        model.setCurrentTick(0);
+        timeline.setValue(0);
+        timeline.setEnabled(false);
+            timer.schedule(new TimerTask() {              
+                public void run() {
+                    if (model.getCurrentTick() == model.getPlayBackTicks()) {
+                        timer.cancel();
+                        model.stopPlay();
+                        timeline.setEnabled(true);
+                    }
+                    else {
+                        model.setCurrentTick(model.getCurrentTick()+1);
+                    }
+                }
+            }, 0, 300);  
+
     }
 }

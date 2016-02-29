@@ -28,10 +28,14 @@ public class Canvas extends JPanel implements Observer {
         model = model_;
         
         addMouseListener(new MouseAdapter() {
-            public void mousePressed(MouseEvent e) {
-                
-                if (model.isPlaying()) return;
-                
+
+            public void mousePressed(MouseEvent e) {                
+                if (model.isPlaying()) {
+                    return;
+                }
+                if (model.getCurrentTick() < model.getPlayBackTicks()) {
+                    model.cutTheTail();
+                }
                 Stroke s = new Stroke(model.getCurrentColor(), model.getCurrentThickness() );
                 Position p = new Position(e.getX(), e.getY());
                 s.addStrokeLinePosition(p);
@@ -39,13 +43,20 @@ public class Canvas extends JPanel implements Observer {
                 model.addPlayBackTick();
                 model.setCurrentTick(model.getPlayBackTicks());
             }
+
             public void mouseReleased(MouseEvent e) {
-                
+                if (model.isPlaying()) {
+                    return;
+                }                
             }
         });
         
         addMouseMotionListener(new MouseMotionAdapter() {
             public void mouseDragged(MouseEvent e) {
+                if (model.isPlaying()) {
+                    return;
+                }
+                
                 Position p = new Position(e.getX(), e.getY());
                 model.addStrokeLinePosition(p);         
             }
@@ -56,7 +67,6 @@ public class Canvas extends JPanel implements Observer {
     @Override 
     public void paintComponent(Graphics gr) {
         super.paintComponent(gr);
-        //System.out.println("drawing up to " + model.getCurrentTick());
         Graphics2D g = (Graphics2D) gr;
         for (int i = 0; i < model.getCurrentTick(); i++) {
             g.setStroke(new BasicStroke(model.strokes.get(i).getThickness()));
