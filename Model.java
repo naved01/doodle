@@ -67,7 +67,6 @@ public class Model extends Observable implements Serializable {
     
     public void addStrokeLinePosition(Position p) {
         if (strokes.size() == 0) {
-            System.out.println("trying to modify empty set of strokes");
             return;
         }
         strokes.get(strokes.size() - 1).addStrokeLinePosition(p);

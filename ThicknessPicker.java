@@ -12,9 +12,9 @@ public class ThicknessPicker extends JPanel implements Observer {
     Model model;
     
     public ThicknessPicker(Model model_) {
-        
+        this.setPreferredSize(new Dimension(80,100));
+        this.setBorder(BorderFactory.createLineBorder(Color.black));
         this.setLayout(new GridLayout(0,2));
-        //this.setPreferredSize(new Dimension(50));
         model = model_;
         
         thicknessButtons = new JButton[NUM_OF_THICKNESS];

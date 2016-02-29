@@ -23,8 +23,6 @@ public class Canvas extends JPanel implements Observer {
     public Canvas(Model model_) {
 
         setBackground(Color.WHITE);
-        setLayout(new FlowLayout(FlowLayout.LEFT));
-        
         model = model_;
         
         addMouseListener(new MouseAdapter() {

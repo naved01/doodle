@@ -19,8 +19,8 @@ public class ColorPalette extends JPanel implements Observer {
         
         this.setLayout(new GridLayout(0,2));
         this.setBorder(BorderFactory.createLineBorder(Color.black));
-        //this.setMaximumSize(new Dimension(100,500));
-        model = model_;  
+        this.setPreferredSize(new Dimension(80,100));
+        model = model_;
         
         buttons = new JButton[NUM_OF_BUTTONS];
         for (int i = 0; i < NUM_OF_BUTTONS; i++) {           

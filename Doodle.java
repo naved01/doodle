@@ -30,12 +30,14 @@ public class Doodle extends JFrame {
         PlayBack playBack = new PlayBack(model);
         model.addObserver(playBack);
         
-        //model.notifyObservers();
-        JPanel customizer = new JPanel(new BorderLayout());
-        customizer.add(colorPalette, BorderLayout.PAGE_START);
-        customizer.add(thicknessPicker);
-        customizer.setPreferredSize(new Dimension(70, 300));
-        
+        JPanel customizer = new JPanel();
+        customizer.setLayout(new BoxLayout(customizer, BoxLayout.Y_AXIS));
+        colorPalette.setAlignmentX(Component.CENTER_ALIGNMENT);
+        customizer.add(colorPalette);
+        thicknessPicker.setAlignmentX(Component.CENTER_ALIGNMENT);
+        customizer.add(thicknessPicker); 
+
+               
         JPanel drawingPanel = new JPanel(new BorderLayout());
         drawingPanel.add(customizer, BorderLayout.LINE_START);
         drawingPanel.add(canvas);
@@ -43,13 +45,13 @@ public class Doodle extends JFrame {
         JPanel p = new JPanel(new BorderLayout());
         getContentPane().add(p);
 
-        p.add(drawingPanel, BorderLayout.PAGE_START);
-        p.add(playBack);
+        p.add(drawingPanel);
+        p.add(playBack, BorderLayout.PAGE_END);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-        setSize(500, 400);
+        setLocation(100, 100);
+        setMinimumSize(new Dimension(700, 500));
         setJMenuBar(getMenu());
-        setTitle("doodly doodle");
+        setTitle("doodily doodle");
         setVisible(true);
         
     }

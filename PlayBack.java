@@ -28,6 +28,7 @@ public class PlayBack extends JPanel implements Observer {
     
     public PlayBack(Model model_) {
         
+        this.setBorder(BorderFactory.createLineBorder(Color.black));
         setLayout(new BorderLayout());
         model = model_;
         
