@@ -1,8 +1,5 @@
-import java.util.Observable;
-import java.util.Observer;
+import java.util.*;
 import javax.swing.*;
-
-import java.awt.GridLayout;
 import java.awt.event.*;
 import java.awt.*;
 
