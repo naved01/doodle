@@ -36,8 +36,7 @@ public class Doodle extends JFrame {
         customizer.add(colorPalette);
         thicknessPicker.setAlignmentX(Component.CENTER_ALIGNMENT);
         customizer.add(thicknessPicker); 
-
-               
+              
         JPanel drawingPanel = new JPanel(new BorderLayout());
         drawingPanel.add(customizer, BorderLayout.LINE_START);
         drawingPanel.add(canvas);

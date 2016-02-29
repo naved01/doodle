@@ -1,8 +1,8 @@
-import java.util.Observable;
-import java.util.Observer;
+import java.util.*;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
+import javax.swing.event.*;
 
 public class ThicknessPicker extends JPanel implements Observer {
 
@@ -10,42 +10,24 @@ public class ThicknessPicker extends JPanel implements Observer {
     JButton[] thicknessButtons;
     int NUM_OF_THICKNESS = 4;
     Model model;
+    JSlider tslider;
+    int MAX_THICKNESS = 10;
     
     public ThicknessPicker(Model model_) {
+        
         this.setPreferredSize(new Dimension(80,100));
         this.setBorder(BorderFactory.createLineBorder(Color.black));
-        this.setLayout(new GridLayout(0,2));
         model = model_;
-        
-        thicknessButtons = new JButton[NUM_OF_THICKNESS];
-        for (int i = 0; i <NUM_OF_THICKNESS; i++) {
-            thicknessButtons[i] = new JButton(Integer.toString(i + 1));
-            this.add(thicknessButtons[i]);
-        }
-        
-        thicknessButtons[0].addMouseListener(new MouseAdapter() {
-            public void mouseReleased(MouseEvent e) {                 
-                model.setCurrentThickness(1);            
+        tslider = new JSlider(JSlider.VERTICAL, 1, MAX_THICKNESS, 1);
+        tslider.setPaintTicks(true);
+        tslider.setSnapToTicks(true);
+        tslider.setMajorTickSpacing(1);
+        tslider.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent e) {
+                model.setCurrentThickness(tslider.getValue());
             }
-        }); 
-
-        thicknessButtons[1].addMouseListener(new MouseAdapter() {
-            public void mouseReleased(MouseEvent e) {                 
-                model.setCurrentThickness(2);            
-            } 
-        }); 
-
-        thicknessButtons[2].addMouseListener(new MouseAdapter() {
-            public void mouseReleased(MouseEvent e) {                 
-                model.setCurrentThickness(3);            
-            } 
-        }); 
-
-        thicknessButtons[3].addMouseListener(new MouseAdapter() {
-            public void mouseReleased(MouseEvent e) {                 
-                model.setCurrentThickness(4);            
-            } 
-        });         
+        });
+        this.add(tslider);
         
     }
          

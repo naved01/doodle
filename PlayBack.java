@@ -1,5 +1,3 @@
-import java.util.Observable;
-import java.util.Observer;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -13,7 +11,6 @@ public class PlayBack extends JPanel implements Observer {
     JSlider timeline;
     int MAX_N_OF_TICKS = 10000;
     java.util.Timer timer;
-    int i = 0;
     
     class SliderListener implements ChangeListener {
         public void stateChanged(ChangeEvent e) {
@@ -50,15 +47,10 @@ public class PlayBack extends JPanel implements Observer {
         
         this.add(p, BorderLayout.LINE_END);
         
-        
+        //button listeners
         play.addMouseListener(new MouseAdapter() {
             public void mouseReleased(MouseEvent e) {
-                try {
-                    playVideo();
-                }
-                catch (InterruptedException eror) {
-                    System.out.println("error");
-                }
+                playVideo();
             }
         });
         
@@ -101,7 +93,7 @@ public class PlayBack extends JPanel implements Observer {
         timeline.setValue(newValue);
     }
     
-    public void playVideo() throws InterruptedException {
+    public void playVideo() {
         if (model.getPlayBackTicks() == 0) {
             return;
         }
